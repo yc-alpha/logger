@@ -20,7 +20,7 @@ func TestLog(t *testing.T) {
 		WithFields(AnyLevel,
 			DatetimeField("2006-01-02 15:04:03").Key("datetime"),
 			LevelField().Key("level").Upper().Prefix("[").Suffix("]"),
-			CallerField(true, false).Key("file"),
+			CallerField(true, false, 0).Key("file"),
 			FuncNameField(true).Key("func"),
 			MessageField().Key("msg"),
 			Group("sys_info",
@@ -53,7 +53,7 @@ func TestLogf(t *testing.T) {
 		WithFields(AnyLevel,
 			DatetimeField("2006-01-02 15:04:03").Key("datetime"),
 			LevelField().Key("level").Upper().Prefix("[").Suffix("]"),
-			CallerField(true, true).Key("caller"),
+			CallerField(true, true, 0).Key("caller"),
 			MessageField().Key("msg"),
 			Group("sys_info",
 				CustomField(func(buf *buffer.Buffer) {
@@ -92,7 +92,7 @@ func TestLogWithColor(t *testing.T) {
 			LevelField().Key("level").Upper().Prefix("[").Suffix("]"),
 		),
 		WithFields(AnyLevel,
-			CallerField(true, true).Key("caller").Color(Black),
+			CallerField(true, true, 0).Key("caller").Color(Black),
 			MessageField().Key("msg").Background(Blue),
 			Group("sys_info",
 				CustomField(func(buf *buffer.Buffer) {
@@ -149,7 +149,7 @@ func TestLogs(t *testing.T) {
 		),
 		WithFields(AnyLevel,
 			MessageField().Key("msg"),
-			CallerField(true, true).Key("caller"),
+			CallerField(true, true, 0).Key("caller"),
 		),
 		WithEncoders(AnyLevel, PlainEncoder, JSONEncoder, LogFmtEncoder),
 	)

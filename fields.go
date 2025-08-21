@@ -446,10 +446,11 @@ type callerField struct {
 	Field
 	shorten      bool
 	showFuncName bool
+	extraSkip    int
 }
 
 func (f *callerField) Log(buf *buffer.Buffer) {
-	pc, file, line, ok := runtime.Caller(8)
+	pc, file, line, ok := runtime.Caller(8 + f.extraSkip)
 	if !ok {
 		_, _ = buf.WriteString("??? 0")
 	}
@@ -484,11 +485,12 @@ func (f *callerField) Log(buf *buffer.Buffer) {
 
 }
 
-func CallerField(shorten bool, showFuncName bool) FieldBuilder {
+func CallerField(shorten bool, showFuncName bool, extraSkip uint8) FieldBuilder {
 	f := &callerField{
 		Field:        Field{key: "caller"},
 		shorten:      shorten,
 		showFuncName: showFuncName,
+		extraSkip:    int(extraSkip),
 	}
 	f.Field._child = f
 	return FieldBuilder{field: f}

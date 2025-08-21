@@ -104,7 +104,7 @@ func UseDefault() {
 		),
 		WithFields(AnyLevel,
 			MessageField().Key("msg"),
-			CallerField(true, true).Key("caller"),
+			CallerField(true, true, 0).Key("caller"),
 		),
 		WithEncoders(AnyLevel, PlainEncoder),
 	)
